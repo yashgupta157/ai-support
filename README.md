@@ -1,4 +1,4 @@
-AI-IT-Support-Pro
+      AI-IT-Support-Pro
 
 AI-IT-Support-Pro is a full-stack enterprise IT service management platform powered by Artificial Intelligence.
 
@@ -10,99 +10,99 @@ The client is built with React, Vite, Tailwind CSS, and Socket.IO Client, while 
 
 
 
-Table of Contents
-Features
+    Table of Contents
+        Features
 
-Authentication & Authorization
+    Authentication & Authorization
 
-Dashboard
+         Dashboard
 
-AI Assistant
+         AI Assistant
 
-Ticket Management
+         Ticket Management
 
-Notifications
+          Notifications
 
-User Management
+           User Management
 
-Command Generator
+           Command Generator
 
-Upload & Log Analysis
+          Upload & Log Analysis
 
-Security Center
+           Security Center
 
-Network Toolkit
+           Network Toolkit
 
-Device Management
+           Device Management
 
-Performance Monitoring
+         Performance Monitoring
 
-Project Structure
+           Project Structure
 
-Frontend Architecture
+         Frontend Architecture
 
-Backend Architecture
+          Backend Architecture
 
-Database Design
+          Database Design
 
-Screenshots
+           Screenshots
+ 
+           Tech Stack
 
-Tech Stack
+          Installation
 
-Installation
+        Environment Variables
 
-Environment Variables
+          API Documentation
 
-API Documentation
+          Socket.IO Architecture
 
-Socket.IO Architecture
+         Folder Structure
 
-Folder Structure
+      Future Improvements
 
-Future Improvements
-
-License
-
-
-
-2.Features
-
-Authentication & Authorization
-
-JWT Authentication
-Secure Login & Registration
-Password Hashing using bcrypt
-Role-Based Access Control (Admin / User)
-Protected Routes
-Axios Authentication Interceptors
+         License
 
 
-3.Dashboard
 
-Enterprise Dashboard
-Live System Monitoring
-CPU Usage
-RAM Usage
-Disk Usage
-AI Health Advisor
-Performance Graphs
-Recent Activities
-Recent Alerts
-Quick Actions
-Live Notifications
+     2.Features
+
+               Authentication & Authorization
+
+                    JWT Authentication
+                 Secure Login & Registration
+                  Password Hashing using bcrypt
+               Role-Based Access Control (Admin / User)
+               Protected Routes
+              Axios Authentication Interceptors
 
 
-4. AI Assistant
+    3.Dashboard
 
-AI-powered IT Support Chat
-Windows Troubleshooting
-Linux Support
-Active Directory Assistance
-DNS & DHCP Troubleshooting
-Networking Guidance
-Cybersecurity Recommendations
-PowerShell Command Generation
-Markdown Response Rendering
+            Enterprise Dashboard
+              Live System Monitoring
+              CPU Usage
+             RAM Usage
+              Disk Usage
+             AI Health Advisor
+              Performance Graphs
+              Recent Activities
+             Recent Alerts
+             Quick Actions
+               Live Notifications
+
+
+    4. AI Assistant
+
+             AI-powered IT Support Chat
+            Windows Troubleshooting
+            Linux Support
+           Active Directory Assistance
+           DNS & DHCP Troubleshooting
+            Networking Guidance
+          Cybersecurity Recommendations
+         PowerShell Command Generation
+           Markdown Response Rendering
 
     5.Ticket Management
 
