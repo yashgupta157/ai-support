@@ -34,6 +34,9 @@ README.md
 ├── 16. Folder Explanation
 
 ├── 17. Future Improvements
+
 ├── 18. Screenshots
+
 ├── 19. Deployment
+
 ├── 20. License
