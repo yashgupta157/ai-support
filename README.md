@@ -43,27 +43,7 @@ README.md
 
 
 
-Authentication
 
-Dashboard
-
-AI Chat
-
-Ticket Management
-
-Command Generator
-
-Security Center
-
-Upload Logs
-
-Network Toolkit
-
-Notifications
-
-User Management
-
-Role Based Access
 
 Live Monitoring
 
