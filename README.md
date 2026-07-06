@@ -10,57 +10,35 @@ The client is built with React, Vite, Tailwind CSS, and Socket.IO Client, while 
 
 
 
-    Table of Contents
+    1.Table of Contents
         Features
 
-    Authentication & Authorization
-
+         Authentication & Authorization
          Dashboard
-
          AI Assistant
-
          Ticket Management
-
           Notifications
-
            User Management
-
            Command Generator
-
           Upload & Log Analysis
-
            Security Center
-
            Network Toolkit
-
            Device Management
-
          Performance Monitoring
-
+         
            Project Structure
-
          Frontend Architecture
-
           Backend Architecture
-
-          Database Design
-
+            Database Design
            Screenshots
  
            Tech Stack
-
           Installation
-
         Environment Variables
-
           API Documentation
-
           Socket.IO Architecture
-
          Folder Structure
-
       Future Improvements
-
          License
 
 
