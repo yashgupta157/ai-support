@@ -31,8 +31,15 @@ const server = http.createServer(app);
 
 initSocket(server);
 
-
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173", // Local development
+      process.env.FRONTEND_URL, // Production frontend
+    ],
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use("/api", aiRoutes);
 app.use("/api/auth", authRoutes);
