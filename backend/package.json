@@ -1,0 +1,33 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.18.1",
+    "bcryptjs": "^3.0.3",
+    "chart.js": "^4.5.1",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.7.3",
+    "multer": "^2.2.0",
+    "nodejs-traceroute": "^2.0.1",
+    "ping": "^1.0.0",
+    "react-chartjs-2": "^5.3.1",
+    "recharts": "^3.9.2",
+    "socket.io": "^4.8.3",
+    "systeminformation": "^5.31.13"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
