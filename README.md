@@ -1,9 +1,13 @@
 README.md
 │
 ├── 1. Project Overview
+
 ├── 2. Features
+
 ├── 3. Tech Stack
+
 ├── 4. Architecture
+
 ├── 5. Folder Structure
 ├── 6. Installation
 ├── 7. Environment Variables
