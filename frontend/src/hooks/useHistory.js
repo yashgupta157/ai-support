@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../services/api"; // adjust the path if needed
 
 export default function useHistory() {
   const [history, setHistory] = useState([]);
@@ -10,19 +10,9 @@ export default function useHistory() {
 
   async function fetchHistory() {
     try {
-      const token = localStorage.getItem("token");
-
-      const res = await axios.get(
-        "http://localhost:5000/api/chat/history",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const res = await api.get("/chat/history");
 
       setHistory(res.data.chats);
-
     } catch (err) {
       console.error(err);
     }
