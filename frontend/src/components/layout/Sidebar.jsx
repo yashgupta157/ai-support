@@ -96,18 +96,12 @@ export default function Sidebar({ open, setOpen }) {
 
   const { search } = useSearch();
 
-  const filteredMenuItems = menuItems.filter((item) => {
-    if (item.path === "/users") {
-      return user?.role === "admin";
-    }
-
-    return true;
-  });
+  const filteredMenuItems = menuItems.filter((item) =>
+    item.path === "/users" ? user?.role === "admin" : true
+  );
 
   return (
     <>
-      {/* Mobile Overlay */}
-
       {open && (
         <div
           onClick={() => setOpen(false)}
@@ -115,26 +109,22 @@ export default function Sidebar({ open, setOpen }) {
         />
       )}
 
-      {/* Sidebar */}
+      <aside
+        className={`
+          fixed left-0 top-0 z-50
+          h-screen w-80
+          bg-slate-950
+          border-r border-slate-800
+          flex flex-col
+          transition-transform duration-300
 
-   <aside
-  className={`
-    fixed left-0 top-0 z-50
-    h-screen w-80
-    bg-slate-950
-    border-r border-slate-800
-    flex flex-col
-    overflow-hidden
-    transition-transform duration-300
+          ${open ? "translate-x-0" : "-translate-x-full"}
 
-    ${open ? "translate-x-0" : "-translate-x-full"}
-
-    lg:static
-    lg:translate-x-0
-  `}
->
+          lg:static
+          lg:translate-x-0
+        `}
+      >
         {/* Mobile Close */}
-
         <div className="flex justify-end p-4 lg:hidden">
           <button
             onClick={() => setOpen(false)}
@@ -149,11 +139,12 @@ export default function Sidebar({ open, setOpen }) {
         <SearchBar />
 
         <NewChatButton newConversation={newConversation} />
-<div className="flex-1 overflow-y-auto px-4">
-  <h3 className="mb-3 text-xs uppercase text-slate-500">
-    Conversations
-  </h3>
 
+        {/* Conversations */}
+        <div className="flex-1 overflow-y-auto px-4">
+          <h3 className="mb-3 text-xs uppercase text-slate-500">
+            Conversations
+          </h3>
 
           <ConversationList
             conversations={conversations}
@@ -164,11 +155,14 @@ export default function Sidebar({ open, setOpen }) {
             deleteConversation={deleteConversation}
             search={search}
           />
+        </div>
 
-        
+        {/* Menu */}
+        <div className="border-t border-slate-800 px-4 py-3 overflow-y-auto max-h-72">
+          <SidebarMenu menuItems={filteredMenuItems} />
+        </div>
 
-        <SidebarMenu menuItems={filteredMenuItems} />
-</div>
+        {/* User */}
         <UserCard />
       </aside>
     </>
