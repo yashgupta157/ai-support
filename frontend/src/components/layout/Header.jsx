@@ -300,8 +300,7 @@ export default function Header({ setSidebarOpen }) {
 
   </div>
 
-</div>
-        </div>
+</div>        </div>
       </div>
     </header>
   );
