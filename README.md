@@ -196,4 +196,18 @@ The client is built with React, Vite, Tailwind CSS, and Socket.IO Client, while 
              Deployment
            Vercel (Frontend)
           Render / Railway (Backend)
-             MongoDB Atlas
+             MongoDB 
+
+
+
+
+             <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/1d4a57a8-ff04-496b-a980-854e6debe593" />
+             <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/90eb6c74-0f65-4d66-9753-feb4ed76bf3e" />
+             <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/e71da4f4-9694-47cd-b973-2504c8d0a259" />
+             <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/1a5f7a2a-59c2-40cd-a1b3-a98fcc576b4c" />
+             <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/33a2be46-12dd-49fd-a50f-e550aa92861c" />
+
+
+
+
+
