@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   Bell,
   ChevronDown,
@@ -28,15 +28,40 @@ export default function Header({ setSidebarOpen }) {
     (n) => !n.read
   ).length;
 
-  const [profileOpen, setProfileOpen] = useState(false);
+  const [profileOpen, setProfileOpen] =
+    useState(false);
 
   const [notificationOpen, setNotificationOpen] =
     useState(false);
 
-  return (
-    <header className="sticky top-0 z-50 border-b border-slate-800 bg-[#020617]/95 backdrop-blur-lg">
+  const profileRef = useRef(null);
 
-      <div className="flex h-20 items-center justify-between gap-3 px-4 sm:px-6 lg:px-8">
+  useEffect(() => {
+    function handleClickOutside(e) {
+      if (
+        profileRef.current &&
+        !profileRef.current.contains(e.target)
+      ) {
+        setProfileOpen(false);
+      }
+    }
+
+    document.addEventListener(
+      "mousedown",
+      handleClickOutside
+    );
+
+    return () =>
+      document.removeEventListener(
+        "mousedown",
+        handleClickOutside
+      );
+  }, []);
+
+  return (
+    <header className="sticky top-0 z-50 border-b border-slate-800 bg-[#020617]/95 backdrop-blur-xl">
+
+      <div className="flex h-20 items-center justify-between px-4 sm:px-6 lg:px-8">
 
         {/* Mobile Menu */}
 
@@ -59,7 +84,7 @@ export default function Header({ setSidebarOpen }) {
           <input
             type="text"
             placeholder="Search infrastructure..."
-            className="w-full rounded-2xl border border-slate-700 bg-slate-900 py-3 pl-12 pr-24 text-white outline-none focus:border-cyan-500"
+            className="w-full rounded-2xl border border-slate-700 bg-slate-900 py-3 pl-12 pr-20 text-white outline-none transition focus:border-cyan-500"
           />
 
           <span className="absolute right-4 top-1/2 hidden -translate-y-1/2 rounded-lg bg-slate-800 px-2 py-1 text-xs text-slate-400 lg:block">
@@ -68,9 +93,11 @@ export default function Header({ setSidebarOpen }) {
 
         </div>
 
-        {/* Right */}
+        {/* Right Side */}
 
-        <div className="flex items-center gap-3">{/* Notifications */}
+        <div className="flex items-center gap-3">
+
+          {/* Notification Section Starts Here */}{/* Notifications */}
 
 <div
   className="relative"
@@ -83,87 +110,107 @@ export default function Header({ setSidebarOpen }) {
   }}
   onMouseLeave={() => setNotificationOpen(false)}
 >
+  {/* Bell */}
+
   <button className="relative rounded-xl bg-slate-900 p-3 transition hover:bg-slate-800">
+
     <Bell size={20} />
 
     {unread > 0 && (
-      <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-600 text-xs text-white">
+      <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-600 text-xs font-semibold text-white">
         {unread}
       </span>
     )}
+
   </button>
 
-  {notificationOpen && (
-    <div className="absolute right-0 top-full pt-2 z-50">
-      <div className="w-[92vw] max-w-md overflow-hidden rounded-2xl border border-slate-700 bg-slate-900 shadow-2xl">
+  {/* Dropdown */}
 
-        {/* Header */}
+  <div
+    className={`absolute right-0 top-full mt-3 w-[380px] overflow-hidden rounded-2xl border border-slate-700 bg-slate-900 shadow-2xl transition-all duration-300 ${
+      notificationOpen
+        ? "visible translate-y-0 opacity-100"
+        : "invisible -translate-y-3 opacity-0"
+    }`}
+  >
 
-        <div className="flex items-center justify-between border-b border-slate-800 p-4">
-          <h2 className="font-semibold text-white">
-            Notifications
-          </h2>
+    {/* Header */}
 
-          <Link
-            to="/notifications"
-            className="text-sm text-cyan-400 hover:text-cyan-300"
-          >
-            View All
-          </Link>
-        </div>
+    <div className="flex items-center justify-between border-b border-slate-800 px-5 py-4">
 
-        {/* Body */}
+      <h2 className="text-lg font-semibold">
+        Notifications
+      </h2>
 
-        <div className="max-h-96 overflow-y-auto">
+      <Link
+        to="/notifications"
+        className="text-sm text-cyan-400 hover:text-cyan-300"
+      >
+        View All
+      </Link>
 
-          {notifications.length > 0 ? (
-
-            notifications.slice(0, 5).map((item) => (
-
-              <div
-                key={item._id}
-                onClick={async () => {
-                  if (!item.read) {
-                    await markRead(item._id);
-                  }
-                }}
-                className={`cursor-pointer border-b border-slate-800 p-4 transition hover:bg-slate-800 ${
-                  item.read ? "" : "bg-slate-800/40"
-                }`}
-              >
-                <p className="font-semibold text-white">
-                  {item.title}
-                </p>
-
-                <p className="mt-1 text-sm text-slate-300 break-words">
-                  {item.message}
-                </p>
-
-                <p className="mt-2 text-xs text-slate-500">
-                  {new Date(item.createdAt).toLocaleString()}
-                </p>
-              </div>
-
-            ))
-
-          ) : (
-
-            <div className="p-8 text-center text-slate-500">
-              No Notifications
-            </div>
-
-          )}
-
-        </div>
-
-      </div>
     </div>
-  )}
 
-</div>{/* Profile */}
+    {/* Body */}
 
-<div className="relative">
+    <div className="max-h-[420px] overflow-y-auto">
 
+      {notifications.length ? (
+
+        notifications.slice(0, 5).map((item) => (
+
+          <div
+            key={item._id}
+            onClick={async () => {
+              if (!item.read) {
+                await markRead(item._id);
+              }
+            }}
+            className={`cursor-pointer border-b border-slate-800 p-4 transition hover:bg-slate-800 ${
+              item.read
+                ? ""
+                : "bg-slate-800/40"
+            }`}
+          >
+
+            <h3 className="font-semibold text-white">
+              {item.title}
+            </h3>
+
+            <p className="mt-1 text-sm text-slate-300">
+              {item.message}
+            </p>
+
+            <p className="mt-2 text-xs text-slate-500">
+              {new Date(
+                item.createdAt
+              ).toLocaleString()}
+            </p>
+
+          </div>
+
+        ))
+
+      ) : (
+
+        <div className="py-12 text-center text-slate-500">
+          No Notifications
+        </div>
+
+      )}
+
+    </div>
+
+  </div>
+
+</div>
+
+{/* Profile Starts Here */}{/* Profile */}
+
+<div
+  ref={profileRef}
+  className="relative"
+>
   <button
     onClick={() => setProfileOpen(!profileOpen)}
     className="flex items-center gap-3 rounded-2xl bg-slate-900 px-2 py-2 transition hover:bg-slate-800 sm:px-4"
@@ -172,18 +219,16 @@ export default function Header({ setSidebarOpen }) {
     {/* Avatar */}
 
     <div className="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-r from-purple-600 to-cyan-500 font-bold text-white">
-
       {user?.name?.charAt(0).toUpperCase()}
-
     </div>
 
-    {/* User Info */}
+    {/* User */}
 
     <div className="hidden text-left md:block">
 
-      <p className="font-semibold text-white">
+      <h3 className="font-semibold text-white">
         {user?.name}
-      </p>
+      </h3>
 
       <p className="max-w-[180px] truncate text-xs text-slate-400">
         {user?.email}
@@ -199,14 +244,21 @@ export default function Header({ setSidebarOpen }) {
     />
 
   </button>
-{profileOpen && (
 
-  <div className="absolute right-0 mt-3 w-64 overflow-hidden rounded-2xl border border-slate-700 bg-slate-900 shadow-2xl z-50">
+  {/* Dropdown */}
+
+  <div
+    className={`absolute right-0 top-full mt-3 w-64 overflow-hidden rounded-2xl border border-slate-700 bg-slate-900 shadow-2xl transition-all duration-300 ${
+      profileOpen
+        ? "visible translate-y-0 opacity-100"
+        : "invisible -translate-y-3 opacity-0"
+    }`}
+  >
 
     <Link
       to="/profile"
       onClick={() => setProfileOpen(false)}
-      className="flex items-center gap-3 px-5 py-4 hover:bg-slate-800"
+      className="flex items-center gap-3 px-5 py-4 transition hover:bg-slate-800"
     >
       <User size={18} />
       Profile
@@ -215,7 +267,7 @@ export default function Header({ setSidebarOpen }) {
     <Link
       to="/settings"
       onClick={() => setProfileOpen(false)}
-      className="flex items-center gap-3 px-5 py-4 hover:bg-slate-800"
+      className="flex items-center gap-3 px-5 py-4 transition hover:bg-slate-800"
     >
       <Settings size={18} />
       Settings
@@ -224,21 +276,23 @@ export default function Header({ setSidebarOpen }) {
     <Link
       to="/notifications"
       onClick={() => setProfileOpen(false)}
-      className="flex items-center gap-3 px-5 py-4 hover:bg-slate-800"
+      className="flex items-center gap-3 px-5 py-4 transition hover:bg-slate-800"
     >
       <Bell size={18} />
+
       Notifications
 
       {unread > 0 && (
-        <span className="ml-auto rounded-full bg-red-600 px-2 py-1 text-xs text-white">
+        <span className="ml-auto rounded-full bg-red-600 px-2 py-1 text-xs font-semibold text-white">
           {unread}
         </span>
       )}
+
     </Link>
 
     <button
       onClick={logout}
-      className="flex w-full items-center gap-3 px-5 py-4 text-red-400 hover:bg-slate-800"
+      className="flex w-full items-center gap-3 px-5 py-4 text-red-400 transition hover:bg-slate-800"
     >
       <LogOut size={18} />
       Logout
@@ -246,14 +300,9 @@ export default function Header({ setSidebarOpen }) {
 
   </div>
 
-)}
-
-</div> {/* End Profile */}
-
-</div> {/* End Right */}
-
-</div> {/* End Header Container */}
-
-</header>
-);
+</div>
+        </div>
+      </div>
+    </header>
+  );
 }
