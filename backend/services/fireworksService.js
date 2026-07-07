@@ -195,14 +195,13 @@ Always use proper Markdown.
     return response.data.choices[0].message.content;
 
   } catch (error) {
+  console.error("\n========== FIREWORKS ERROR ==========");
+  console.error("Status:", error.response?.status);
+  console.error("Response:");
+  console.error(JSON.stringify(error.response?.data, null, 2));
+  console.error("Axios Message:", error.message);
+  console.error("=====================================\n");
 
-    console.log("\n========== FIREWORKS ERROR ==========");
-    // console.log("Status:", error.response?.status);
-    // console.log("Response:");
-    // console.log(JSON.stringify(error.response?.data, null, 2));
-    // console.log("Axios Message:", error.message);
-    // console.log("=====================================\n");
-
-    throw error;
-  }
+  throw error;
+}
 }
