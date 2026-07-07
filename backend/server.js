@@ -56,6 +56,15 @@ app.use("/api/users", userRoutes);
 app.use("/api/settings", settingsRoutes);
 app.use("/api/notifications", notificationRoutes);
 
+
+
+app.get("/test-cors", (req, res) => {
+  res.json({
+    success: true,
+    origin: req.headers.origin,
+  });
+});
+
 app.get("/", (req, res) => {
   res.json({
     success: true,
