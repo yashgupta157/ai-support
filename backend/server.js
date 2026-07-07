@@ -34,8 +34,8 @@ initSocket(server);
 app.use(
   cors({
     origin: [
-      "http://localhost:5173", // Local development
-      process.env.FRONTEND_URL, // Production frontend
+      "http://localhost:5173",
+      "https://ai-support-hl2t.vercel.app",
     ],
     credentials: true,
   })
