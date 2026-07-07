@@ -30,13 +30,9 @@ const app = express();
 const server = http.createServer(app);
 
 initSocket(server);
-
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "https://ai-support-hl2t.vercel.app",
-    ],
+    origin: process.env.FRONTEND_URL,
     credentials: true,
   })
 );
