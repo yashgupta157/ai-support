@@ -7,13 +7,16 @@ let io;
 // ================================
 
 export function initSocket(server) {
-  io = new Server(server, {
-    cors: {
-      origin: "http://localhost:5173",
-      credentials: true,
-      methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
-    },
-  });
+ io = new Server(server, {
+  cors: {
+    origin: [
+      "http://localhost:5173",
+      "https://ai-support-hl2t.vercel.app",
+    ],
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+  },
+});
 
   io.on("connection", (socket) => {
     // console.log(`🟢 Connected: ${socket.id}`);
