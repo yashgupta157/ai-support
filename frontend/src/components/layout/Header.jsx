@@ -29,9 +29,7 @@ export default function Header({ setSidebarOpen }) {
     (n) => !n.read
   ).length;
 
-  const [profileOpen, setProfileOpen] =
-    useState(false);
-
+ 
   const [
     notificationOpen,
     setNotificationOpen,
@@ -188,12 +186,20 @@ export default function Header({ setSidebarOpen }) {
 
           </div>          {/* Profile */}
 
-          <div className="relative">
+       <div
+  className="relative"
+  onMouseEnter={async () => {
+    setNotificationOpen(true);
 
-            <button
-              onClick={() => setProfileOpen(!profileOpen)}
-              className="flex items-center gap-3 rounded-2xl bg-slate-900 px-2 py-2 transition hover:bg-slate-800 sm:px-4"
-            >
+    if (unread > 0) {
+      await markAllRead();
+    }
+  }}
+  onMouseLeave={() => setNotificationOpen(false)}
+>
+<button
+  className="relative rounded-xl bg-slate-900 p-3 transition hover:bg-slate-800"
+>
 
               {/* Avatar */}
 
