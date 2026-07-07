@@ -48,7 +48,8 @@ Be concise and technically accurate.
         temperature: 0.5,
       },
     });
-
+console.log("Gemini Response:");
+console.log(response);
     return response.text;
 
   } catch (error) {
