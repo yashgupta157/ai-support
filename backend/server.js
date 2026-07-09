@@ -30,9 +30,21 @@ const app = express();
 const server = http.createServer(app);
 
 initSocket(server);
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://ai-it-support-pro.vercel.app",
+  "https://ai-support-hl2t-12dz54ozi-yashgupta11.vercel.app",
+];
+
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL,
+    origin(origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   })
 );
