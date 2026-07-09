@@ -33,21 +33,28 @@ initSocket(server);
 const allowedOrigins = [
   "http://localhost:5173",
   "https://ai-it-support-pro.vercel.app",
-  "https://ai-support-1-wh55.onrender.com/api",
+  
 ];
 
 app.use(
   cors({
     origin(origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
+      if (!origin) return callback(null, true);
+
+      if (
+        allowedOrigins.includes(origin) ||
+        origin.endsWith(".vercel.app")
+      ) {
+        return callback(null, true);
       }
+
+      callback(new Error("Not allowed by CORS"));
     },
     credentials: true,
   })
 );
+
+
 app.use(express.json());
 app.use("/api", aiRoutes);
 app.use("/api/auth", authRoutes);
