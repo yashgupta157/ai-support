@@ -33,7 +33,7 @@ initSocket(server);
 const allowedOrigins = [
   "http://localhost:5173",
   "https://ai-it-support-pro.vercel.app",
-  "https://ai-support-hl2t-12dz54ozi-yashgupta11.vercel.app",
+  "https://ai-support-1-wh55.onrender.com/api",
 ];
 
 app.use(
