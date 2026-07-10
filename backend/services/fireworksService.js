@@ -21,7 +21,6 @@ export async function askFireworks(prompt) {
 
   } catch (err) {
     console.error("OpenRouter Error:", err);
-
-    throw new Error(err.message);
+    throw err;
   }
 }
