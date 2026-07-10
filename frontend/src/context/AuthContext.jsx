@@ -13,19 +13,24 @@ export function AuthProvider({ children }) {
     }
   }, []);
 
-  function login(userData, token) {
-    localStorage.setItem("token", token);
-    localStorage.setItem("user", JSON.stringify(userData));
-
-    setUser(userData);
-  }
-
+ 
   function logout() {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
 
     setUser(null);
-  }
+  }function login(userData, token) {
+  console.log("LOGIN CALLED");
+  console.log("TOKEN:", token);
+  console.log("USER:", userData);
+
+  localStorage.setItem("token", token);
+  localStorage.setItem("user", JSON.stringify(userData));
+
+  console.log("Stored token:", localStorage.getItem("token"));
+
+  setUser(userData);
+}
 
   return (
     <AuthContext.Provider
