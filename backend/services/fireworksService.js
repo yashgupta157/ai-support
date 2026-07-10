@@ -1,61 +1,25 @@
-import { GoogleGenAI } from "@google/genai";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const ai = new GoogleGenAI({
-  apiKey: process.env.GEMINI_API_KEY,
-});
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
-export async function askFireworks(message) {
+app.get("/test-gemini", async (req, res) => {
   try {
-    const response = await ai.models.generateContent({
+    const model = genAI.getGenerativeModel({
       model: "gemini-2.5-flash",
-
-      contents: message,
-
-      config: {
-        systemInstruction: `
-You are an Expert AI IT Support Assistant.
-
-Your expertise includes:
-
-- Windows 10 & Windows 11
-- Windows Server 2019 & 2022
-- Active Directory
-- DNS
-- DHCP
-- Group Policy (GPO)
-- PowerShell
-- Linux
-- Networking
-- Azure
-- VMware
-- Cyber Security
-- Firewalls
-- Cloud Computing
-
-Always answer in GitHub Markdown.
-
-Use:
-- headings
-- tables
-- bullet points
-- code blocks
-- PowerShell examples
-- CMD examples
-- Bash examples
-
-Be concise and technically accurate.
-`,
-        temperature: 0.5,
-      },
     });
-console.log("Gemini Response:");
-console.log(response);
-    return response.text;
 
-  } catch (error) {
-    console.error("========== GEMINI ERROR ==========");
-    console.error(error);
-    console.error("==================================");
-    throw error;
+    const result = await model.generateContent("Say Hello");
+
+    res.json({
+      success: true,
+      response: result.response.text(),
+    });
+  } catch (err) {
+    console.error(err);
+
+    res.status(500).json({
+      success: false,
+      error: err.message,
+    });
   }
-}
+});
