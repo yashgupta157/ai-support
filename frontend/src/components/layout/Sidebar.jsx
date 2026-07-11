@@ -87,7 +87,6 @@ export default function Sidebar({ open, setOpen }) {
     conversations,
     selectedConversation,
     setSelectedConversation,
-  
     loadMessages,
     renameConversation,
     deleteConversation,
@@ -108,21 +107,19 @@ export default function Sidebar({ open, setOpen }) {
         />
       )}
 
-
-<aside
-  className={`
-    fixed left-0 top-0 z-50
-    h-screen w-80
-    bg-slate-950
-    border-r border-slate-800
-    flex flex-col
-    transition-transform duration-300
-    ${open ? "translate-x-0" : "-translate-x-full"}
-    lg:static
-    lg:translate-x-0
-  `}
->
-        {/* Mobile Close */}
+      <aside
+        className={`
+          fixed left-0 top-0 z-50
+          h-screen w-80
+          bg-slate-950
+          border-r border-slate-800
+          flex flex-col
+          transition-transform duration-300
+          ${open ? "translate-x-0" : "-translate-x-full"}
+          lg:static
+          lg:translate-x-0
+        `}
+      >
         <div className="flex justify-end p-4 lg:hidden">
           <button
             onClick={() => setOpen(false)}
@@ -136,13 +133,11 @@ export default function Sidebar({ open, setOpen }) {
 
         <SearchBar />
 
-      
-
-        {/* Conversations */}
-<div
-  className="flex-1 overflow-y-auto min-h-0 px-4"
-  style={{ WebkitOverflowScrolling: "touch" }}
->          <h3 className="mb-3 text-xs uppercase text-slate-500">
+        <div
+          className="flex-1 overflow-y-auto px-4"
+          style={{ WebkitOverflowScrolling: "touch" }}
+        >
+          <h3 className="mb-3 text-xs uppercase text-slate-500">
             Conversations
           </h3>
 
@@ -155,15 +150,15 @@ export default function Sidebar({ open, setOpen }) {
             deleteConversation={deleteConversation}
             search={search}
           />
+
+          <div className="border-t border-slate-800 mt-5 pt-5">
+            <SidebarMenu menuItems={filteredMenuItems} />
+          </div>
         </div>
 
-        {/* Menu */}
-        <div className="border-t border-slate-800 px-4 py-3 overflow-y-auto max-h-72">
-          <SidebarMenu menuItems={filteredMenuItems} />
+        <div className="mt-auto">
+          <UserCard />
         </div>
-
-        {/* User */}
-        <UserCard />
       </aside>
     </>
   );

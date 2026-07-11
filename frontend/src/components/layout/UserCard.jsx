@@ -14,9 +14,8 @@ export default function UserCard() {
   }
 
   return (
-    <div className="border-t border-slate-800 p-5 bg-slate-950">
+    <div className="border-t border-slate-800 bg-slate-950 p-4">
       <div className="rounded-2xl border border-slate-800 bg-slate-900 p-4">
-        {/* Avatar */}
         <div className="flex items-center gap-3">
           <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-purple-600 to-blue-600 text-lg font-bold">
             {user?.name?.charAt(0)?.toUpperCase() || "U"}
@@ -33,8 +32,7 @@ export default function UserCard() {
           </div>
         </div>
 
-        {/* Status */}
-        <div className="mt-4 flex items-center gap-2 text-sm text-green-400">
+        <div className="mt-4 flex items-center gap-2 text-green-400 text-sm">
           <Circle
             size={10}
             fill="currentColor"
@@ -43,10 +41,9 @@ export default function UserCard() {
           Online
         </div>
 
-        {/* Logout */}
         <button
           onClick={handleLogout}
-          className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-red-600 py-3 transition hover:bg-red-700"
+          className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-red-600 py-3 font-medium transition hover:bg-red-700"
         >
           <LogOut size={18} />
           Logout
