@@ -21,21 +21,26 @@ export default function useChat() {
 
     setLoading(true);
 
-    let conversation = selectedConversation;
-
     try {
-      // Create conversation automatically
-      if (!conversation) {
-        const res = await api.post("/conversations");
+      let conversation = selectedConversation;
 
-        conversation = res.data.conversation;
+      // Create conversation automatically if none exists
+      if (!conversation) {
+        const conversationRes = await api.post("/conversations", {
+          title:
+            text.length > 50
+              ? text.substring(0, 50) + "..."
+              : text,
+        });
+
+        conversation = conversationRes.data.conversation;
 
         setSelectedConversation(conversation);
 
         await loadConversations();
       }
 
-      // Show user message instantly
+      // Show user message immediately
       setMessages((prev) => [
         ...prev,
         {
@@ -44,8 +49,8 @@ export default function useChat() {
         },
       ]);
 
-      // Ask AI
-      const res = await api.post("/chat", {
+      // Send to AI
+      const chatRes = await api.post("/chat", {
         message: text,
         conversationId: conversation._id,
       });
@@ -55,11 +60,11 @@ export default function useChat() {
         ...prev,
         {
           role: "assistant",
-          content: res.data.reply,
+          content: chatRes.data.reply,
         },
       ]);
 
-      // Refresh history
+      // Refresh sidebar history
       await loadConversations();
 
     } catch (err) {
@@ -75,42 +80,43 @@ export default function useChat() {
   async function regenerateMessage() {
     if (!selectedConversation) return;
 
-    const lastUser = [...messages]
+    const lastUserMessage = [...messages]
       .reverse()
-      .find((m) => m.role === "user");
+      .find((msg) => msg.role === "user");
 
-    if (!lastUser) return;
+    if (!lastUserMessage) return;
 
     setLoading(true);
 
     try {
-      // Remove previous assistant reply
+      // Remove last assistant response
       setMessages((prev) => {
-        const arr = [...prev];
+        const updated = [...prev];
 
-        if (arr[arr.length - 1]?.role === "assistant") {
-          arr.pop();
+        if (
+          updated.length > 0 &&
+          updated[updated.length - 1].role === "assistant"
+        ) {
+          updated.pop();
         }
 
-        return arr;
+        return updated;
       });
 
       // Ask AI again
-      const res = await api.post("/chat", {
-        message: lastUser.content,
+      const chatRes = await api.post("/chat", {
+        message: lastUserMessage.content,
         conversationId: selectedConversation._id,
       });
 
-      // Add new assistant reply
+      // Add regenerated response
       setMessages((prev) => [
         ...prev,
         {
           role: "assistant",
-          content: res.data.reply,
+          content: chatRes.data.reply,
         },
       ]);
-
-      await loadConversations();
 
     } catch (err) {
       console.error(err);

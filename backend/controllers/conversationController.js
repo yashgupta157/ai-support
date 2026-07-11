@@ -5,15 +5,18 @@ import Chat from "../models/Chat.js";
 // Create a new conversation
 export const createConversation = async (req, res) => {
   try {
+    const { title } = req.body;
+
     const conversation = await Conversation.create({
       user: req.user._id,
-      title: "New Conversation",
+      title: title || "Untitled",
     });
 
     res.status(201).json({
       success: true,
       conversation,
     });
+
   } catch (err) {
     res.status(500).json({
       success: false,
