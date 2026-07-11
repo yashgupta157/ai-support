@@ -4,35 +4,53 @@ import { useConversation } from "../context/ConversationContext";
 
 export default function useChat() {
   const [loading, setLoading] = useState(false);
+
   const {
     selectedConversation,
+    setSelectedConversation,
+    loadConversations,
     messages,
     setMessages,
   } = useConversation();
 
+  // ==========================
+  // Send Message
+  // ==========================
   async function sendMessage(text) {
-    if (!selectedConversation) {
-      alert("Please create a conversation first.");
-      return;
-    }
+    if (!text.trim()) return;
 
     setLoading(true);
 
-    // Show user message immediately
-    setMessages((prev) => [
-      ...prev,
-      {
-        role: "user",
-        content: text,
-      },
-    ]);
+    let conversation = selectedConversation;
 
     try {
+      // Create conversation automatically
+      if (!conversation) {
+        const res = await api.post("/conversations");
+
+        conversation = res.data.conversation;
+
+        setSelectedConversation(conversation);
+
+        await loadConversations();
+      }
+
+      // Show user message instantly
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "user",
+          content: text,
+        },
+      ]);
+
+      // Ask AI
       const res = await api.post("/chat", {
         message: text,
-        conversationId: selectedConversation._id,
+        conversationId: conversation._id,
       });
 
+      // Show AI response
       setMessages((prev) => [
         ...prev,
         {
@@ -40,80 +58,71 @@ export default function useChat() {
           content: res.data.reply,
         },
       ]);
+
+      // Refresh history
+      await loadConversations();
+
     } catch (err) {
       console.error(err);
     } finally {
       setLoading(false);
     }
   }
-async function regenerateMessage() {
-  if (!selectedConversation) return;
 
-  const lastUser = [...messages]
-    .reverse()
-    .find((m) => m.role === "user");
+  // ==========================
+  // Regenerate Response
+  // ==========================
+  async function regenerateMessage() {
+    if (!selectedConversation) return;
 
-  if (!lastUser) return;
+    const lastUser = [...messages]
+      .reverse()
+      .find((m) => m.role === "user");
 
-  setLoading(true);
+    if (!lastUser) return;
 
-  try {
-    // Remove last assistant reply
-    setMessages((prev) => {
-      const arr = [...prev];
-      if (arr[arr.length - 1]?.role === "assistant") {
-        arr.pop();
-      }
-      return arr;
-    });
-const res = await api.post("/chat", {
-  message: text,
-  conversationId: selectedConversation._id,
-});
+    setLoading(true);
 
-// console.log("Chat API Response:", res.data);
+    try {
+      // Remove previous assistant reply
+      setMessages((prev) => {
+        const arr = [...prev];
 
-setMessages((prev) => [
-  ...prev,
-  {
-    role: "assistant",
-    content:
-      typeof res.data.reply === "string"
-        ? res.data.reply
-        : JSON.stringify(res.data.reply, null, 2),
-  },
-]);
+        if (arr[arr.length - 1]?.role === "assistant") {
+          arr.pop();
+        }
 
-// console.log("Regenerate Response:", res.data);
+        return arr;
+      });
 
-setMessages((prev) => [
-  ...prev,
-  {
-    role: "assistant",
-    content:
-      typeof res.data.reply === "string"
-        ? res.data.reply
-        : JSON.stringify(res.data.reply, null, 2),
-  },
-]);
-    setMessages((prev) => [
-      
-      ...prev,
-      {
-        role: "assistant",
-        content: res.data.reply,
-      },
-    ]);
-  } catch (err) {
-    console.error(err);
-  } finally {
-    setLoading(false);
+      // Ask AI again
+      const res = await api.post("/chat", {
+        message: lastUser.content,
+        conversationId: selectedConversation._id,
+      });
+
+      // Add new assistant reply
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "assistant",
+          content: res.data.reply,
+        },
+      ]);
+
+      await loadConversations();
+
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
   }
-}
- return {
-  messages,
-  loading,
-  sendMessage,
-  regenerateMessage,
-};
+
+  return {
+    messages,
+    loading,
+    sendMessage,
+    regenerateMessage,
+  };
 }

@@ -14,7 +14,6 @@ import {
 
 import SidebarLogo from "./SidebarLogo";
 import SearchBar from "./SearchBar";
-import NewChatButton from "./NewChatButton";
 import ConversationList from "./ConversationList";
 import SidebarMenu from "./SidebarMenu";
 import UserCard from "./UserCard";
@@ -88,7 +87,7 @@ export default function Sidebar({ open, setOpen }) {
     conversations,
     selectedConversation,
     setSelectedConversation,
-    newConversation,
+  
     loadMessages,
     renameConversation,
     deleteConversation,
@@ -137,7 +136,7 @@ export default function Sidebar({ open, setOpen }) {
 
         <SearchBar />
 
-        <NewChatButton newConversation={newConversation} />
+      
 
         {/* Conversations */}
 <div
