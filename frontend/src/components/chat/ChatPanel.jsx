@@ -29,7 +29,6 @@ export default function ChatPanel() {
     if (!input.trim()) return;
 
     await sendMessage(input);
-
     setInput("");
   }
 
@@ -45,36 +44,41 @@ export default function ChatPanel() {
 
   async function handleDrop(e) {
     e.preventDefault();
-
     setDragActive(false);
 
     const file = e.dataTransfer.files[0];
 
     if (!file) return;
 
-    // console.log("Dropped File:", file);
-
-    // 🚀 Next step:
-    // Upload file to backend
-    // const formData = new FormData();
-    // formData.append("file", file);
-    // await uploadLog(formData);
+    // Upload file later
   }
 
   return (
     <div
-      className="relative h-[75vh] rounded-3xl border border-slate-800 bg-slate-950 flex flex-col overflow-hidden shadow-2xl"
+      className="
+        relative
+        flex
+        h-full
+        min-h-0
+        w-full
+        flex-col
+        overflow-hidden
+        rounded-none
+        border-0
+        bg-slate-950
+        lg:rounded-3xl
+        lg:border
+        lg:border-slate-800
+        lg:shadow-2xl
+      "
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
     >
-      {/* Drag Overlay */}
       <ChatDropzone dragActive={dragActive} />
 
-      {/* Header */}
       <ChatHeader />
 
-      {/* Messages */}
       <ChatWindow
         messages={messages}
         loading={loading}
@@ -84,7 +88,6 @@ export default function ChatPanel() {
         }}
       />
 
-      {/* Input */}
       <ChatInput
         input={input}
         setInput={setInput}

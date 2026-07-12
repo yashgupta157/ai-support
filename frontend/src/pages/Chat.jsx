@@ -2,7 +2,7 @@ import ChatPanel from "../components/chat/ChatPanel";
 
 export default function Chat() {
   return (
-    <div className="p-8">
+    <div className="h-full w-full">
       <ChatPanel />
     </div>
   );

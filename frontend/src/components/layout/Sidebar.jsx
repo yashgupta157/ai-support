@@ -100,6 +100,7 @@ export default function Sidebar({ open, setOpen }) {
 
   return (
     <>
+      {/* Overlay */}
       {open && (
         <div
           onClick={() => setOpen(false)}
@@ -107,16 +108,20 @@ export default function Sidebar({ open, setOpen }) {
         />
       )}
 
+      {/* Sidebar */}
       <aside
         className={`
           fixed inset-y-0 left-0 z-50
-          w-80 max-w-[85vw]
-          bg-slate-950 border-r border-slate-800
+          w-[85vw] max-w-80
+          bg-slate-950
+          border-r border-slate-800
           flex flex-col
           overflow-hidden
           transition-transform duration-300
           ${open ? "translate-x-0" : "-translate-x-full"}
-          lg:static lg:translate-x-0 lg:w-80
+          lg:static
+          lg:translate-x-0
+          lg:w-80
         `}
       >
         {/* Mobile Close */}
@@ -139,9 +144,9 @@ export default function Sidebar({ open, setOpen }) {
           <SearchBar />
         </div>
 
-        {/* Scrollable Area */}
+        {/* Scrollable Content */}
         <div
-          className="flex-1 overflow-y-auto"
+          className="flex-1 min-h-0 overflow-y-auto"
           style={{ WebkitOverflowScrolling: "touch" }}
         >
           {/* Conversations */}
@@ -167,8 +172,8 @@ export default function Sidebar({ open, setOpen }) {
           </div>
         </div>
 
-        {/* Fixed Bottom */}
-        <div className="shrink-0">
+        {/* Bottom User */}
+        <div className="mt-auto shrink-0 border-t border-slate-800 bg-slate-950">
           <UserCard />
         </div>
       </aside>
