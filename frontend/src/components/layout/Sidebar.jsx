@@ -109,18 +109,18 @@ export default function Sidebar({ open, setOpen }) {
 
       <aside
         className={`
-          fixed left-0 top-0 z-50
-          h-screen w-80
-          bg-slate-950
-          border-r border-slate-800
+          fixed inset-y-0 left-0 z-50
+          w-80 max-w-[85vw]
+          bg-slate-950 border-r border-slate-800
           flex flex-col
+          overflow-hidden
           transition-transform duration-300
           ${open ? "translate-x-0" : "-translate-x-full"}
-          lg:static
-          lg:translate-x-0
+          lg:static lg:translate-x-0 lg:w-80
         `}
       >
-        <div className="flex justify-end p-4 lg:hidden">
+        {/* Mobile Close */}
+        <div className="flex justify-end p-4 lg:hidden shrink-0">
           <button
             onClick={() => setOpen(false)}
             className="rounded-lg p-2 hover:bg-slate-800"
@@ -129,34 +129,46 @@ export default function Sidebar({ open, setOpen }) {
           </button>
         </div>
 
-        <SidebarLogo />
+        {/* Logo */}
+        <div className="shrink-0">
+          <SidebarLogo />
+        </div>
 
-        <SearchBar />
+        {/* Search */}
+        <div className="shrink-0">
+          <SearchBar />
+        </div>
 
+        {/* Scrollable Area */}
         <div
-          className="flex-1 overflow-y-auto px-4"
+          className="flex-1 overflow-y-auto"
           style={{ WebkitOverflowScrolling: "touch" }}
         >
-          <h3 className="mb-3 text-xs uppercase text-slate-500">
-            Conversations
-          </h3>
+          {/* Conversations */}
+          <div className="px-4">
+            <h3 className="mb-3 text-xs uppercase text-slate-500">
+              Conversations
+            </h3>
 
-          <ConversationList
-            conversations={conversations}
-            selectedConversation={selectedConversation}
-            setSelectedConversation={setSelectedConversation}
-            loadMessages={loadMessages}
-            renameConversation={renameConversation}
-            deleteConversation={deleteConversation}
-            search={search}
-          />
+            <ConversationList
+              conversations={conversations}
+              selectedConversation={selectedConversation}
+              setSelectedConversation={setSelectedConversation}
+              loadMessages={loadMessages}
+              renameConversation={renameConversation}
+              deleteConversation={deleteConversation}
+              search={search}
+            />
+          </div>
 
-          <div className="border-t border-slate-800 mt-5 pt-5">
+          {/* Menu */}
+          <div className="mt-6 border-t border-slate-800 px-4 pt-4">
             <SidebarMenu menuItems={filteredMenuItems} />
           </div>
         </div>
 
-        <div className="mt-auto">
+        {/* Fixed Bottom */}
+        <div className="shrink-0">
           <UserCard />
         </div>
       </aside>
